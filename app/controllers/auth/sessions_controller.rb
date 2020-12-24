@@ -4,7 +4,7 @@ class Auth::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    render_resource(resource)
+    render_jsonapi_response(resource)
   end
 
   def respond_to_on_destroy

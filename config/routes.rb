@@ -11,5 +11,5 @@ Rails.application.routes.draw do
                  registrations: 'auth/registrations'
              }
 
-  resources :users, defaults: { format: :json }, only: %i[index]
+  resources :users, defaults: { format: :json }, only: %i[show]
 end

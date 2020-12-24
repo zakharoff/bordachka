@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
+  def show
+    render_jsonapi_response(user)
+  end
 
-  def index
-    @users = User.all
-    render json: @users
+  private
+
+  def user
+    @user ||= User.find(params[:id])
   end
 end
