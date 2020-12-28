@@ -11,6 +11,7 @@ gem 'rack-cors'
 gem 'devise'
 gem 'devise-jwt', '~> 0.7.0'
 gem 'jsonapi-rails'
+gem 'nanoid'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
