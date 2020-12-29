@@ -38,8 +38,8 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      expect(json['data']).to have_id(board.id.to_s)
-      expect(json['data']).to have_type('boards')
+      expect(json['data'].keys).to match_array(%w[id type attributes relationships])
+      expect(json['data']['id']).to eq(board.id.to_s)
     end
   end
 

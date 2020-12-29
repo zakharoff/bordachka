@@ -24,7 +24,7 @@ describe Auth::RegistrationsController, type: :request do
     end
 
     it 'returns the user email' do
-      expect(json['data']).to have_attribute(:email).with_value(user.email)
+      expect(json['data']['attributes']['email']).to eq(user.email)
     end
   end
 

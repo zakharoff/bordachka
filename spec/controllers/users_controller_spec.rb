@@ -16,8 +16,8 @@ describe UsersController, type: :request do
     end
 
     it 'returns the user' do
-      expect(json['data']).to have_id(user.id.to_s)
-      expect(json['data']).to have_type('users')
+      expect(json['data'].keys).to match_array(%w[id type attributes])
+      expect(json['data']['id']).to eq(user.id.to_s)
     end
   end
 
