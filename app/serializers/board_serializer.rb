@@ -1,7 +1,8 @@
-class BoardSerializer
-  include JSONAPI::Serializer
+class BoardSerializer < ActiveModel::Serializer
+  attributes :slug, :title, :description, :img_url, :created_at, :updated_at
 
-  attributes :title, :description, :img_url, :slug, :author_id, :created_at, :updated_at
+  belongs_to :author, class_name: 'User'
 
-  belongs_to :author, serializer: :user
+  link(:self) { board_path(object) }
+  link(:author) { user_path(object.author) }
 end

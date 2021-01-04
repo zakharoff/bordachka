@@ -3,12 +3,12 @@ class BoardsController < ApplicationController
 
   def index
     @boards = current_user.boards.order(created_at: :desc)
-    render json: BoardSerializer.new(@boards, include: ['author'])
+    render json: @boards, include: [:author]
   end
 
   def show
     board
-    render json: BoardSerializer.new(board, include: ['author'])
+    render json: board, include: [:author]
   end
 
   private

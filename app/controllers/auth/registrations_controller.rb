@@ -9,7 +9,7 @@ class Auth::RegistrationsController < Devise::RegistrationsController
     if resource.errors.any?
       render json: resource.errors, status: 400
     else
-      render json: UserSerializer.new(resource)
+      render json: resource
     end
   end
 end

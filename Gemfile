@@ -10,7 +10,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 gem 'devise'
 gem 'devise-jwt', '~> 0.7.0'
-gem 'jsonapi-serializer'
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'nanoid'
 
 group :development, :test do

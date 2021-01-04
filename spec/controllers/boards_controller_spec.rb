@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe BoardsController, type: :request do
   let (:user) { create(:user) }
-  let (:user2) { create(:user) }
-  let (:board) { create(:board, author_id: user.id) }
-  let (:board2) { create(:board, author_id: user.id) }
-  let (:board3) { create(:board, author_id: user2.id) }
+  let! (:board) { create(:board, author_id: user.id) }
 
   context '#index' do
+    let (:user2) { create(:user) }
+    let! (:board2) { create(:board, author_id: user.id) }
+    let! (:board3) { create(:board, author_id: user2.id) }
     before do
       login(user)
       get "/boards", headers: {
@@ -38,8 +38,8 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      expect(json['data'].keys).to match_array(%w[id type attributes relationships])
-      expect(json['data']['id']).to eq(board.id.to_s)
+      @handler = BoardSerializer.new(board).attributes.to_json
+      expect(json['data']['attributes']).to eq(JSON.parse(@handler))
     end
   end
 

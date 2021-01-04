@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     user
-    render json: UserSerializer.new(user)
+    render json: user
   end
 
   private
