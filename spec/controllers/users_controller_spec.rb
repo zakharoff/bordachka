@@ -16,8 +16,8 @@ describe UsersController, type: :request do
     end
 
     it 'returns the user' do
-      expect(json['data']).to have_id(user.id.to_s)
-      expect(json['data']).to have_type('users')
+      @handler = UserSerializer.new(user).attributes.to_json
+      expect(json['data']['attributes']).to eq(JSON.parse(@handler))
     end
   end
 

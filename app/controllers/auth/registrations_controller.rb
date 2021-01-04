@@ -6,6 +6,10 @@ class Auth::RegistrationsController < Devise::RegistrationsController
     resource.save
     sign_up(resource_name, resource) if resource.persisted?
 
-    render_jsonapi_response(resource)
+    if resource.errors.any?
+      render json: resource.errors, status: 400
+    else
+      render json: resource
+    end
   end
 end

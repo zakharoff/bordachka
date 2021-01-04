@@ -10,7 +10,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rack-cors'
 gem 'devise'
 gem 'devise-jwt', '~> 0.7.0'
-gem 'jsonapi-rails'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'nanoid'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -26,7 +27,6 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'jsonapi-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

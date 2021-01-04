@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    render_jsonapi_response(user)
+    user
+    render json: user
   end
 
   private
