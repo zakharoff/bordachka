@@ -7,7 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create([
               { email: 'user1@example.com', password: '123456' },
-              { email: 'user2@example.com', password: '123456' }
+              { email: 'user2@example.com', password: '123456' },
+              { email: 'user3@example.com', password: '123456' }
             ])
 
 Board.create([
@@ -17,3 +18,8 @@ Board.create([
                { title: 'Board2', description: 'Simple board2 by user1', author_id: 1 },
                { title: 'Board3', description: 'Simple board3 by user2', author_id: 2 }
              ])
+
+Card.create([
+              { title: 'Card1', body: 'Body1', author_id: 1, executor_id: 3 },
+              { title: '', body: 'Body2', author_id: 1 }
+            ])

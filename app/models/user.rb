@@ -6,4 +6,6 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   has_many :boards, foreign_key: :author_id, dependent: :destroy
+  has_many :cards, foreign_key: :author_id, dependent: :destroy
+  has_many :cards, foreign_key: :executor_id, dependent: :destroy
 end
