@@ -8,6 +8,7 @@ describe BoardsController, type: :request do
     let (:user2) { create(:user) }
     let! (:board2) { create(:board, author_id: user.id) }
     let! (:board3) { create(:board, author_id: user2.id) }
+
     before do
       login(user)
       get "/boards", headers: {
@@ -19,7 +20,7 @@ describe BoardsController, type: :request do
       expect(response.status).to eq(200)
     end
 
-    it 'returns the board' do
+    it 'returns the boards' do
       expect(json['data'].size).to eq(2)
     end
   end
@@ -38,8 +39,8 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      @handler = BoardSerializer.new(board).attributes.to_json
-      expect(json['data']['attributes']).to eq(JSON.parse(@handler))
+      @handler = ActiveModelSerializers::SerializableResource.new(board).to_json
+      expect(json['data']).to eq(JSON.parse(@handler)['data'])
     end
   end
 

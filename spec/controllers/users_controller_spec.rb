@@ -16,8 +16,8 @@ describe UsersController, type: :request do
     end
 
     it 'returns the user' do
-      @handler = UserSerializer.new(user).attributes.to_json
-      expect(json['data']['attributes']).to eq(JSON.parse(@handler))
+      @handler = ActiveModelSerializers::SerializableResource.new(user).to_json
+      expect(json['data']).to eq(JSON.parse(@handler)['data'])
     end
   end
 

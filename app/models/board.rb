@@ -2,7 +2,7 @@ class Board < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :title, presence: true, length: { in: 1..30 }
-  validates :description, length: { in: 0..255 }
+  validates :description, length: { maximum: 255 }, allow_blank: true
 
   before_create :set_slug
 
