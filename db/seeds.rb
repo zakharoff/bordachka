@@ -20,6 +20,6 @@ Board.create([
              ])
 
 Card.create([
-              { title: 'Card1', body: 'Body1', author_id: 1, executor_id: 3 },
+              { title: 'Card1', body: 'Body1', author_id: 1, executor_ids: [3] },
               { title: '', body: 'Body2', author_id: 1 }
             ])

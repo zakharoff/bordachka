@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe CardsController, type: :request do
   let (:user) { create(:user) }
-  let! (:card) { create(:card, author_id: user.id, executor_id: user.id) }
+  let! (:card) { create(:card, author_id: user.id, executor_ids: [user.id]) }
 
   context '#index' do
     let (:user2) { create(:user) }
-    let! (:card2) { create(:card, author_id: user.id, executor_id: user.id) }
-    let! (:card3) { create(:card, author_id: user2.id, executor_id: user2.id) }
+    let! (:card2) { create(:card, author_id: user.id, executor_ids: [user.id]) }
+    let! (:card3) { create(:card, author_id: user2.id) }
 
     before do
       login(user)

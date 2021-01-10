@@ -3,12 +3,12 @@ class CardsController < ApplicationController
 
   def index
     @cards = current_user.cards.order(created_at: :asc)
-    render json: @cards, include: [:author, :executor]
+    render json: @cards, include: [:author, :executors]
   end
 
   def show
     card
-    render json: card, include: [:author, :executor]
+    render json: card, include: [:author, :executors]
   end
 
   private
