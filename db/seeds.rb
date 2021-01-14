@@ -19,7 +19,12 @@ Board.create([
                { title: 'Board3', description: 'Simple board3 by user2', author_id: 2 }
              ])
 
+Column.create([
+                { title: 'Backlog', board_id: 1 },
+                { title: 'Completed', board_id: 1 }
+              ])
+
 Card.create([
-              { title: 'Card1', body: 'Body1', author_id: 1, executor_ids: [3] },
-              { title: '', body: 'Body2', author_id: 1 }
+              { title: 'Card1', body: 'Body1', column_id: 1, board_id: 1, author_id: 1, executor_ids: [3] },
+              { title: '', body: 'Body2', column_id: 1, board_id: 1, author_id: 1 }
             ])

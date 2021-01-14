@@ -8,7 +8,7 @@ class CardsController < ApplicationController
 
   def show
     card
-    render json: card, include: [:author, :executors]
+    render json: card, include: [:author, :executors, :column]
   end
 
   private

@@ -1,6 +1,9 @@
 class Board < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
+  has_many :columns, dependent: :destroy
+  has_many :cards, dependent: :destroy
+
   validates :title, presence: true, length: { in: 1..30 }
   validates :description, length: { maximum: 255 }, allow_blank: true
 

@@ -8,7 +8,7 @@ class BoardsController < ApplicationController
 
   def show
     board
-    render json: board, include: [:author]
+    render json: board, include: [:author, :column, :cards]
   end
 
   private
