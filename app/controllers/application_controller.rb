@@ -13,6 +13,6 @@ class ApplicationController < ActionController::API
                 'title': 'Not Found'
             }
         ]
-    }, status: 404
+    }, status: :not_found
   end
 end

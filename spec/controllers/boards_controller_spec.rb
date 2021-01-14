@@ -39,8 +39,42 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      @handler = ActiveModelSerializers::SerializableResource.new(board).to_json
-      expect(json['data']).to eq(JSON.parse(@handler)['data'])
+      handler = ActiveModelSerializers::SerializableResource.new(board).to_json
+      expect(json['data']).to eq(JSON.parse(handler)['data'])
+    end
+  end
+
+  context '#create' do
+    before do
+      login(user)
+    end
+
+    describe 'with good params' do
+      before do
+        post "/boards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { board: { title: 'testBoard' } }
+      end
+
+      it 'returns 201' do
+        expect(response.status).to eq(201)
+      end
+
+      it 'return the board' do
+        expect(json['data']['attributes']['title']).to eq('testBoard')
+      end
+    end
+
+    describe 'with bad params' do
+      before do
+        post "/boards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { board: { title: '' } }
+      end
+
+      it 'return 422' do
+        expect(response.status).to eq(422)
+      end
     end
   end
 

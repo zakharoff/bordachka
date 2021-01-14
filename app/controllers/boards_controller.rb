@@ -11,9 +11,24 @@ class BoardsController < ApplicationController
     render json: board, include: [:author, :column, :cards]
   end
 
+  def create
+    @board = Board.new(board_params)
+    @board.author_id = current_user.id
+
+    if @board.save
+      render json: @board, include: [:author], status: :created
+    else
+      render json: @board.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def board
     @board ||= Board.find_by!(slug: params[:slug])
+  end
+
+  def board_params
+    params.require(:board).permit(:title, :description, :img_url)
   end
 end

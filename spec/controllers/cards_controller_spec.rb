@@ -44,6 +44,43 @@ describe CardsController, type: :request do
     end
   end
 
+  context '#create' do
+    before do
+      login(user)
+    end
+
+    describe 'with good params' do
+      let (:board) { create(:board) }
+      let (:column) { create(:column) }
+
+      before do
+        post "/cards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { card: { title: 'testCard', board_id: board.id, column_id: column.id } }
+      end
+
+      it 'returns 201' do
+        expect(response.status).to eq(201)
+      end
+
+      it 'return the board' do
+        expect(json['data']['attributes']['title']).to eq('testCard')
+      end
+    end
+
+    describe 'with bad params' do
+      before do
+        post "/cards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { card: { title: '' } }
+      end
+
+      it 'return 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
+
   context 'When a card is missing' do
     before do
       login(user)

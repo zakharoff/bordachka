@@ -26,6 +26,40 @@ describe ColumnsController, type: :request do
     end
   end
 
+  context '#create' do
+    before do
+      login(user)
+    end
+
+    describe 'with good params' do
+      before do
+        post "/columns/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { column: { title: 'testColumn', board_id: board.id } }
+      end
+
+      it 'returns 201' do
+        expect(response.status).to eq(201)
+      end
+
+      it 'return the board' do
+        expect(json['data']['attributes']['title']).to eq('testColumn')
+      end
+    end
+
+    describe 'with bad params' do
+      before do
+        post "/columns/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { column: { title: '', board: board.id } }
+      end
+
+      it 'return 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
+
   context 'When the Authorization header is missing' do
     before do
       get "/columns"

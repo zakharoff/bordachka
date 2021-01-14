@@ -6,9 +6,23 @@ class ColumnsController < ApplicationController
     render json: @columns, include: [:cards]
   end
 
+  def create
+    @column = Column.new(column_params)
+
+    if @column.save
+      render json: @column, status: :created
+    else
+      render json: @column.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def board
-    @board ||= Board.find(params.require(:column)[:board_id])
+    @board ||= Board.find(params[:column][:board_id])
+  end
+
+  def column_params
+    params.require(:column).permit(:title, :board_id)
   end
 end
