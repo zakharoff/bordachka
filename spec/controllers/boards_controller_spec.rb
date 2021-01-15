@@ -39,7 +39,8 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      handler = ActiveModelSerializers::SerializableResource.new(board).to_json
+      options = { serializer: BoardFullSerializer }
+      handler = ActiveModelSerializers::SerializableResource.new(board, options).to_json
       expect(json['data']).to eq(JSON.parse(handler)['data'])
     end
   end

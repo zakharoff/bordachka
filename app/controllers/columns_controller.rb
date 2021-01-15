@@ -1,11 +1,6 @@
 class ColumnsController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @columns = board.columns.order(created_at: :asc)
-    render json: @columns, include: [:cards]
-  end
-
   def create
     @column = Column.new(column_params)
 
@@ -27,10 +22,6 @@ class ColumnsController < ApplicationController
   end
 
   private
-
-  def board
-    @board ||= Board.find(params[:column][:board_id])
-  end
 
   def column
     @column ||= Column.find(params[:id])

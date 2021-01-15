@@ -8,7 +8,7 @@ class BoardsController < ApplicationController
 
   def show
     board
-    render json: @board, include: [:author, :column, :cards]
+    render json: @board, include: [:author, :columns, :cards], serializer: BoardFullSerializer
   end
 
   def create

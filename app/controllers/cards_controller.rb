@@ -1,16 +1,6 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @cards = current_user.cards.order(created_at: :asc)
-    render json: @cards, include: [:author, :executors]
-  end
-
-  def show
-    card
-    render json: card, include: [:author, :executors, :column]
-  end
-
   def create
     @card = Card.new(card_params)
     @card.author_id = current_user.id
