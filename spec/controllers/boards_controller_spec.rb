@@ -8,6 +8,7 @@ describe BoardsController, type: :request do
     let (:user2) { create(:user) }
     let! (:board2) { create(:board, author_id: user.id) }
     let! (:board3) { create(:board, author_id: user2.id) }
+
     before do
       login(user)
       get "/boards", headers: {
@@ -19,7 +20,7 @@ describe BoardsController, type: :request do
       expect(response.status).to eq(200)
     end
 
-    it 'returns the board' do
+    it 'returns the boards' do
       expect(json['data'].size).to eq(2)
     end
   end
@@ -38,8 +39,60 @@ describe BoardsController, type: :request do
     end
 
     it 'returns the board' do
-      @handler = BoardSerializer.new(board).attributes.to_json
-      expect(json['data']['attributes']).to eq(JSON.parse(@handler))
+      options = { serializer: BoardFullSerializer }
+      handler = ActiveModelSerializers::SerializableResource.new(board, options).to_json
+      expect(json['data']).to eq(JSON.parse(handler)['data'])
+    end
+  end
+
+  context '#create' do
+    before do
+      login(user)
+    end
+
+    describe 'with good params' do
+      before do
+        post "/boards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { board: { title: 'testBoard' } }
+      end
+
+      it 'returns 201' do
+        expect(response.status).to eq(201)
+      end
+
+      it 'return the board' do
+        expect(json['data']['attributes']['title']).to eq('testBoard')
+      end
+    end
+
+    describe 'with bad params' do
+      before do
+        post "/boards/", headers: {
+          'Authorization': response.headers['Authorization']
+        }, params: { board: { title: '' } }
+      end
+
+      it 'return 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
+
+  context '#destroy' do
+    before do
+      login(user)
+      delete "/boards/#{board.slug}", headers: {
+        'Authorization': response.headers['Authorization']
+      }
+    end
+
+    it 'return 200' do
+      expect(response.status).to eq(200)
+    end
+
+    it 'delete current board' do
+      expect(Board.count).to eq(0)
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_26_215333) do
+ActiveRecord::Schema.define(version: 2021_01_14_141151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,36 @@ ActiveRecord::Schema.define(version: 2020_12_26_215333) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_id"], name: "index_boards_on_author_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.bigint "author_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "column_id"
+    t.bigint "board_id"
+    t.index ["author_id"], name: "index_cards_on_author_id"
+    t.index ["board_id"], name: "index_cards_on_board_id"
+    t.index ["column_id"], name: "index_cards_on_column_id"
+  end
+
+  create_table "cards_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "card_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["card_id", "user_id"], name: "index_cards_users_on_card_id_and_user_id", unique: true
+    t.index ["user_id", "card_id"], name: "index_cards_users_on_user_id_and_card_id", unique: true
+  end
+
+  create_table "columns", force: :cascade do |t|
+    t.string "title", null: false
+    t.bigint "board_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["board_id"], name: "index_columns_on_board_id"
   end
 
   create_table "jwt_denylist", force: :cascade do |t|
@@ -47,4 +77,10 @@ ActiveRecord::Schema.define(version: 2020_12_26_215333) do
   end
 
   add_foreign_key "boards", "users", column: "author_id"
+  add_foreign_key "cards", "boards"
+  add_foreign_key "cards", "columns"
+  add_foreign_key "cards", "users", column: "author_id"
+  add_foreign_key "cards_users", "cards"
+  add_foreign_key "cards_users", "users"
+  add_foreign_key "columns", "boards"
 end

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     user
-    render json: user
+    render json: user, include: [:boards, :assigned_cards], serializer: UserFullSerializer
   end
 
   private
