@@ -78,6 +78,23 @@ describe BoardsController, type: :request do
     end
   end
 
+  context '#destroy' do
+    before do
+      login(user)
+      delete "/boards/#{board.slug}", headers: {
+        'Authorization': response.headers['Authorization']
+      }
+    end
+
+    it 'return 200' do
+      expect(response.status).to eq(200)
+    end
+
+    it 'delete current board' do
+      expect(Board.count).to eq(0)
+    end
+  end
+
   context 'When a board is missing' do
     before do
       login(user)

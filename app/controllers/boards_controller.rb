@@ -8,7 +8,7 @@ class BoardsController < ApplicationController
 
   def show
     board
-    render json: board, include: [:author, :column, :cards]
+    render json: @board, include: [:author, :column, :cards]
   end
 
   def create
@@ -17,6 +17,16 @@ class BoardsController < ApplicationController
 
     if @board.save
       render json: @board, include: [:author], status: :created
+    else
+      render json: @board.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    board
+
+    if @board.destroy
+      render json: @board
     else
       render json: @board.errors, status: :unprocessable_entity
     end

@@ -81,6 +81,23 @@ describe CardsController, type: :request do
     end
   end
 
+  context '#destroy' do
+    before do
+      login(user)
+      delete "/cards/#{card.id}", headers: {
+        'Authorization': response.headers['Authorization']
+      }
+    end
+
+    it 'return 200' do
+      expect(response.status).to eq(200)
+    end
+
+    it 'delete current card' do
+      expect(Card.count).to eq(0)
+    end
+  end
+
   context 'When a card is missing' do
     before do
       login(user)

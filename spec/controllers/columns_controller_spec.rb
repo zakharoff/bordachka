@@ -60,6 +60,23 @@ describe ColumnsController, type: :request do
     end
   end
 
+  context '#destroy' do
+    before do
+      login(user)
+      delete "/columns/#{column.id}", headers: {
+        'Authorization': response.headers['Authorization']
+      }
+    end
+
+    it 'return 200' do
+      expect(response.status).to eq(200)
+    end
+
+    it 'delete current column' do
+      expect(Column.count).to eq(0)
+    end
+  end
+
   context 'When the Authorization header is missing' do
     before do
       get "/columns"

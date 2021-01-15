@@ -16,10 +16,24 @@ class ColumnsController < ApplicationController
     end
   end
 
+  def destroy
+    column
+
+    if @column.destroy
+      render json: @column
+    else
+      render json: @column.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def board
     @board ||= Board.find(params[:column][:board_id])
+  end
+
+  def column
+    @column ||= Column.find(params[:id])
   end
 
   def column_params

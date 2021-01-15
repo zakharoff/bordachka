@@ -22,6 +22,16 @@ class CardsController < ApplicationController
     end
   end
 
+  def destroy
+    card
+
+    if @card.destroy
+      render json: @card
+    else
+      render json: @card.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def card
