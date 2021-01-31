@@ -9,4 +9,15 @@ class User < ApplicationRecord
   has_many :cards, foreign_key: :author_id, dependent: :destroy
 
   has_and_belongs_to_many :assigned_cards, class_name: 'Card'
+
+  before_create :set_slug
+
+  private
+
+  def set_slug
+    loop do
+      self.slug = Nanoid.generate(size: 8)
+      break unless User.where(slug: slug).exists?
+    end
+  end
 end

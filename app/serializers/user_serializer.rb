@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :email
+  attributes :email, :slug
 
   link(:self) { user_path(object) }
 end

@@ -10,24 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_14_141151) do
+ActiveRecord::Schema.define(version: 2021_01_31_233247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "f"
     t.text "description"
     t.text "img_url"
-    t.string "slug"
+    t.string "slug", default: "f"
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_id"], name: "index_boards_on_author_id"
+    t.index ["slug"], name: "index_boards_on_slug", unique: true
   end
 
   create_table "cards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", default: "f"
     t.text "body"
     t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
@@ -49,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_01_14_141151) do
   end
 
   create_table "columns", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title", default: "f", null: false
     t.bigint "board_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -72,8 +73,10 @@ ActiveRecord::Schema.define(version: 2021_01_14_141151) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
   add_foreign_key "boards", "users", column: "author_id"
